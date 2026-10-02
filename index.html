@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catdation Scripts</title>
-
+<link rel="icon" href="IMG_1986.jpg">
     <style>
         * {
             margin: 0;
@@ -20,7 +20,6 @@
             min-height: 100vh;
         }
 
-        /* NAVBAR */
         nav {
             height: 70px;
             display: flex;
@@ -58,21 +57,17 @@
             box-shadow: 0 0 20px #9d5cff;
         }
 
-        /* HERO */
         .hero {
             text-align: center;
             padding: 90px 20px 60px;
-            background:
-                radial-gradient(circle at center, #20103c 0%, #08080d 60%);
+            background: radial-gradient(circle at center, #20103c 0%, #08080d 60%);
         }
 
         .hero h1 {
             font-size: 60px;
             margin-bottom: 15px;
             color: #ffffff;
-            text-shadow:
-                0 0 10px #9d5cff,
-                0 0 30px #9d5cff;
+            text-shadow: 0 0 10px #9d5cff, 0 0 30px #9d5cff;
         }
 
         .hero p {
@@ -80,7 +75,6 @@
             font-size: 18px;
         }
 
-        /* PRODUCT */
         .product-section {
             display: flex;
             justify-content: center;
@@ -163,7 +157,8 @@
             background: #9d5cff;
         }
 
-        #quantity {
+        #quantity,
+        #cartQuantity {
             font-size: 18px;
             min-width: 25px;
             text-align: center;
@@ -187,7 +182,6 @@
             box-shadow: 0 0 25px #9d5cff;
         }
 
-        /* FEATURES */
         .features {
             max-width: 900px;
             margin: auto;
@@ -214,7 +208,6 @@
             color: #888;
         }
 
-        /* FOOTER */
         footer {
             text-align: center;
             padding: 50px 20px;
@@ -223,46 +216,185 @@
             color: #666;
         }
 
-        /* CART POPUP */
-        .cart-popup {
+        .message-overlay {
             position: fixed;
-            right: 25px;
-            top: 85px;
-            width: 320px;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .message-box {
+            width: 350px;
+            max-width: 90%;
+            max-height: 92vh;
+            overflow-y: auto;
             background: #11111a;
             border: 1px solid #9d5cff;
-            border-radius: 12px;
-            padding: 22px;
-            display: none;
-            z-index: 200;
-            box-shadow: 0 0 30px rgba(157, 92, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(157, 92, 255, 0.35);
+            animation: popupIn 0.25s ease;
+            position: relative;
         }
 
-        .cart-popup h2 {
-            margin-bottom: 15px;
+        .checkout-box {
+            width: 390px;
         }
 
-        .cart-item {
+        .message-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .message-box h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .message-box p {
+            color: #999;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .summary {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            margin-bottom: 15px;
-            color: #bbb;
+            gap: 12px;
+            padding: 14px 0;
+            margin: 8px 0 18px;
+            border-top: 1px solid #292938;
+            border-bottom: 1px solid #292938;
         }
 
-        .checkout {
+        .summary-name {
+            font-weight: bold;
+        }
+
+        .summary-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #b47aff;
+            min-width: 70px;
+            text-align: right;
+        }
+
+        .summary .quantity {
+            margin-bottom: 0;
+            gap: 6px;
+        }
+
+        .summary .quantity button {
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+        }
+
+        .message-box .field-hint {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .username-fields {
+            max-height: 36vh;
+            overflow-y: auto;
+        }
+
+        .username-input {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            background: #08080d;
+            border: 1px solid #292938;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .username-input::placeholder {
+            color: #666;
+        }
+
+        .username-input:focus {
+            border-color: #9d5cff;
+        }
+
+        .username-input.invalid {
+            border-color: #ff5c7a;
+        }
+
+        .message-box .field-error {
+            text-align: left;
+            font-size: 14px;
+            color: #ff8098;
+            margin-bottom: 12px;
+        }
+
+        .message-box .field-error:empty {
+            display: none;
+        }
+
+        .message-box .limit-note {
+            font-size: 13px;
+            margin: 12px 0 0;
+        }
+
+        .message-button {
+            width: 100%;
+            padding: 13px;
             border: none;
-            border-radius: 7px;
+            border-radius: 8px;
             background: #9d5cff;
             color: white;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
         }
 
-        .checkout:hover {
+        .message-button:hover {
             background: #b47aff;
+            box-shadow: 0 0 20px #9d5cff;
+        }
+
+        .checkout-box .message-button {
+            margin-top: 6px;
+            padding: 15px;
+            font-size: 16px;
+            background: linear-gradient(90deg, #7d3cff, #b45cff);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: #777;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .close-popup:hover {
+            color: white;
+        }
+
+        @keyframes popupIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         @media (max-width: 700px) {
@@ -278,6 +410,16 @@
                 width: 100%;
                 max-width: 390px;
             }
+
+            .message-box {
+                padding: 26px 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .message-box {
+                animation: none;
+            }
         }
     </style>
 </head>
@@ -287,7 +429,7 @@
     <nav>
         <div class="logo">CATDATION SCRIPTS</div>
 
-        <button class="cart-button" onclick="toggleCart()">
+        <button class="cart-button" onclick="openCart()">
             🛒 Cart (<span id="cartCount">0</span>)
         </button>
     </nav>
@@ -301,7 +443,6 @@
 
         <div class="product-card">
 
-            <!-- PRODUCT IMAGE -->
             <div class="product-image">
                 <img src="IMG_1986.jpg" alt="Catdation product image">
             </div>
@@ -319,9 +460,9 @@
                 <div class="price">$10.00</div>
 
                 <div class="quantity">
-                    <button onclick="changeQuantity(-1)">−</button>
+                    <button onclick="changeQuantity(-1)" aria-label="Decrease quantity">−</button>
                     <span id="quantity">1</span>
-                    <button onclick="changeQuantity(1)">+</button>
+                    <button onclick="changeQuantity(1)" aria-label="Increase quantity">+</button>
                 </div>
 
                 <button class="buy-button" onclick="addToCart()">
@@ -356,76 +497,276 @@
         © 2026 Catdation Scripts. All rights reserved.
     </footer>
 
-    <!-- CART -->
-    <div class="cart-popup" id="cartPopup">
+    <div class="message-overlay" id="checkoutOverlay">
 
-        <h2>Your Cart</h2>
+        <div class="message-box checkout-box">
 
-        <div class="cart-item">
-            <span>Catdation</span>
-            <span>$<span id="cartTotal">0.00</span></span>
+            <button class="close-popup" onclick="closeCheckout()" aria-label="Close">
+                ×
+            </button>
+
+            <div class="message-icon" id="checkoutIcon">✓</div>
+
+            <h2 id="checkoutTitle">Added to Cart</h2>
+
+            <div class="summary">
+                <span class="summary-name">Catdation</span>
+
+                <div class="quantity">
+                    <button onclick="changeCartQuantity(-1)" aria-label="Remove one script">−</button>
+                    <span id="cartQuantity">0</span>
+                    <button onclick="changeCartQuantity(1)" aria-label="Add one script">+</button>
+                </div>
+
+                <span class="summary-total">$<span id="cartTotal">0.00</span></span>
+            </div>
+
+            <p class="field-hint" id="usernameHint">Enter the username for your script.</p>
+
+            <div class="username-fields" id="usernameFields"></div>
+
+            <p class="field-error" id="usernameError" role="alert"></p>
+
+            <button class="message-button" onclick="goToStripe()">
+                GO TO CHECKOUT
+            </button>
+
+            <p class="limit-note" id="limitNote" hidden>Up to 9 scripts per order.</p>
+
         </div>
 
-        <p>Quantity: <span id="cartQuantity">0</span></p>
+    </div>
 
-        <button class="checkout" onclick="checkout()">
-            CHECKOUT
-        </button>
+    <div class="message-overlay" id="messageOverlay">
+
+        <div class="message-box">
+
+            <button class="close-popup" onclick="closeMessage()" aria-label="Close">
+                ×
+            </button>
+
+            <div class="message-icon" id="messageIcon">🛒</div>
+
+            <h2 id="messageTitle">Cart Empty</h2>
+
+            <p id="messageText">
+                Add Catdation to your cart before checking out.
+            </p>
+
+            <button class="message-button" id="messageButton" onclick="closeMessage()">
+                CLOSE
+            </button>
+
+        </div>
 
     </div>
 
     <script>
 
+        const STRIPE_LINK = "https://buy.stripe.com/dRmeVc9rObUv3Gf71xdwc00";
+        const PRICE = 10;
+        const MAX_SCRIPTS = 9;
+        const USERNAME_PATTERN = /^[A-Za-z0-9_]{1,20}$/;
+
         let quantity = 1;
         let cartQuantity = 0;
+        let usernames = [];
 
         function changeQuantity(amount) {
-            quantity += amount;
 
-            if (quantity < 1) {
-                quantity = 1;
-            }
+            quantity = Math.min(MAX_SCRIPTS, Math.max(1, quantity + amount));
 
             document.getElementById("quantity").textContent = quantity;
         }
 
         function addToCart() {
-            cartQuantity += quantity;
+
+            cartQuantity = Math.min(MAX_SCRIPTS, cartQuantity + quantity);
+
+            renderCart();
+            openCheckout("✓", "Added to Cart");
+        }
+
+        function changeCartQuantity(amount) {
+
+            cartQuantity = Math.min(MAX_SCRIPTS, Math.max(0, cartQuantity + amount));
+
+            renderCart();
+
+            if (cartQuantity === 0) {
+                closeCheckout();
+            }
+        }
+
+        function renderCart() {
 
             document.getElementById("cartCount").textContent = cartQuantity;
             document.getElementById("cartQuantity").textContent = cartQuantity;
+            document.getElementById("cartTotal").textContent = (cartQuantity * PRICE).toFixed(2);
 
-            let total = cartQuantity * 10;
+            document.getElementById("usernameHint").textContent = cartQuantity > 1
+                ? "Enter one username for each script."
+                : "Enter the username for your script.";
 
-            document.getElementById("cartTotal").textContent =
-                total.toFixed(2);
+            document.getElementById("limitNote").hidden = cartQuantity < MAX_SCRIPTS;
+            document.getElementById("usernameError").textContent = "";
 
-            alert("Catdation added to your cart!");
+            renderUsernameFields();
         }
 
-        function toggleCart() {
-            const cart = document.getElementById("cartPopup");
+        function renderUsernameFields() {
 
-            if (cart.style.display === "block") {
-                cart.style.display = "none";
-            } else {
-                cart.style.display = "block";
-            }
+            const container = document.getElementById("usernameFields");
+
+            usernames = Array.from({ length: cartQuantity }, function(_, index) {
+                return usernames[index] || "";
+            });
+
+            container.innerHTML = "";
+
+            usernames.forEach(function(value, index) {
+
+                const label = cartQuantity > 1 ? "Username " + (index + 1) : "Username";
+                const input = document.createElement("input");
+
+                input.type = "text";
+                input.className = "username-input";
+                input.placeholder = label;
+                input.maxLength = 20;
+                input.value = value;
+                input.autocomplete = "off";
+                input.spellcheck = false;
+                input.setAttribute("autocapitalize", "off");
+                input.setAttribute("aria-label", label);
+
+                input.addEventListener("input", function() {
+                    usernames[index] = input.value.trim();
+                    input.classList.remove("invalid");
+                    document.getElementById("usernameError").textContent = "";
+                });
+
+                input.addEventListener("keydown", function(event) {
+                    if (event.key === "Enter") {
+                        goToStripe();
+                    }
+                });
+
+                container.appendChild(input);
+            });
         }
 
-        function checkout() {
+        function openCart() {
 
             if (cartQuantity === 0) {
-                alert("Your cart is empty!");
+
+                showMessage(
+                    "🛒",
+                    "Cart Empty",
+                    "Add Catdation to your cart before checking out.",
+                    "CLOSE",
+                    closeMessage
+                );
+
                 return;
             }
 
-            alert(
-                "Checkout would start here.\n\n" +
-                "Cart quantity: " + cartQuantity +
-                "\nTotal: $" + (cartQuantity * 10).toFixed(2)
-            );
+            openCheckout("🛒", "Checkout");
         }
+
+        function openCheckout(icon, title) {
+
+            document.getElementById("checkoutIcon").textContent = icon;
+            document.getElementById("checkoutTitle").textContent = title;
+            document.getElementById("checkoutOverlay").style.display = "flex";
+
+            const inputs = Array.from(document.querySelectorAll(".username-input"));
+            const firstEmpty = inputs.find(function(input) {
+                return input.value.trim() === "";
+            });
+
+            if (firstEmpty) {
+                firstEmpty.focus();
+            }
+        }
+
+        function closeCheckout() {
+            document.getElementById("checkoutOverlay").style.display = "none";
+        }
+
+        function goToStripe() {
+
+            const inputs = Array.from(document.querySelectorAll(".username-input"));
+            const error = document.getElementById("usernameError");
+
+            let firstInvalid = null;
+            let anyEmpty = false;
+
+            inputs.forEach(function(input, index) {
+
+                const value = input.value.trim();
+                const valid = USERNAME_PATTERN.test(value);
+
+                usernames[index] = value;
+                input.classList.toggle("invalid", !valid);
+
+                if (value === "") {
+                    anyEmpty = true;
+                }
+
+                if (!valid && !firstInvalid) {
+                    firstInvalid = input;
+                }
+            });
+
+            if (firstInvalid) {
+
+                error.textContent = anyEmpty
+                    ? "Enter a username for each script."
+                    : "Usernames can only use letters, numbers and underscores.";
+
+                firstInvalid.focus();
+
+                return;
+            }
+
+            window.location.href = STRIPE_LINK
+                + "?client_reference_id="
+                + encodeURIComponent(usernames.join("-"));
+        }
+
+        function showMessage(icon, title, text, buttonText, buttonAction) {
+
+            document.getElementById("messageIcon").textContent = icon;
+            document.getElementById("messageTitle").textContent = title;
+            document.getElementById("messageText").textContent = text;
+            document.getElementById("messageButton").textContent = buttonText;
+            document.getElementById("messageButton").onclick = buttonAction;
+
+            document.getElementById("messageOverlay").style.display = "flex";
+        }
+
+        function closeMessage() {
+            document.getElementById("messageOverlay").style.display = "none";
+        }
+
+        document.getElementById("checkoutOverlay").addEventListener("click", function(event) {
+            if (event.target === this) {
+                closeCheckout();
+            }
+        });
+
+        document.getElementById("messageOverlay").addEventListener("click", function(event) {
+            if (event.target === this) {
+                closeMessage();
+            }
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeCheckout();
+                closeMessage();
+            }
+        });
 
     </script>
 

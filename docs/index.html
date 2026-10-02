@@ -1,4 +1,4 @@
-```html
+`````html
 <!DOCTYPE html> 
 <html lang="en"> 
 <head> 
@@ -215,6 +215,8 @@
             color: #666; 
         } 
  
+        /* CART POPUP */ 
+ 
         .cart-popup { 
             position: fixed; 
             right: 25px; 
@@ -256,6 +258,91 @@
             background: #b47aff; 
         } 
  
+        /* CUSTOM POPUP */ 
+ 
+        .message-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0, 0, 0, 0.65); 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 1000; 
+            backdrop-filter: blur(4px); 
+        } 
+ 
+        .message-box { 
+            width: 350px; 
+            max-width: 90%; 
+            background: #11111a; 
+            border: 1px solid #9d5cff; 
+            border-radius: 16px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 0 50px rgba(157, 92, 255, 0.35); 
+            animation: popupIn 0.25s ease; 
+            position: relative; 
+        } 
+ 
+        .message-icon { 
+            font-size: 45px; 
+            margin-bottom: 12px; 
+        } 
+ 
+        .message-box h2 { 
+            font-size: 24px; 
+            margin-bottom: 10px; 
+        } 
+ 
+        .message-box p { 
+            color: #999; 
+            margin-bottom: 22px; 
+            line-height: 1.5; 
+        } 
+ 
+        .message-button { 
+            width: 100%; 
+            padding: 13px; 
+            border: none; 
+            border-radius: 8px; 
+            background: #9d5cff; 
+            color: white; 
+            font-weight: bold; 
+            cursor: pointer; 
+        } 
+ 
+        .message-button:hover { 
+            background: #b47aff; 
+            box-shadow: 0 0 20px #9d5cff; 
+        } 
+ 
+        .close-popup { 
+            position: absolute; 
+            top: 12px; 
+            right: 16px; 
+            background: none; 
+            border: none; 
+            color: #777; 
+            font-size: 25px; 
+            cursor: pointer; 
+        } 
+ 
+        .close-popup:hover { 
+            color: white; 
+        } 
+ 
+        @keyframes popupIn { 
+            from { 
+                opacity: 0; 
+                transform: scale(0.9) translateY(10px); 
+            } 
+ 
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+            } 
+        } 
+ 
         @media (max-width: 700px) { 
             .hero h1 { 
                 font-size: 42px; 
@@ -268,6 +355,12 @@
             .product-card { 
                 width: 100%; 
                 max-width: 390px; 
+            } 
+ 
+            .cart-popup { 
+                right: 10px; 
+                left: 10px; 
+                width: auto; 
             } 
         } 
     </style> 
@@ -346,6 +439,8 @@
         © 2026 Catdation Scripts. All rights reserved. 
     </footer> 
  
+    <!-- CART --> 
+ 
     <div class="cart-popup" id="cartPopup"> 
  
         <h2>Your Cart</h2> 
@@ -363,12 +458,39 @@
  
     </div> 
  
+    <!-- CUSTOM MESSAGE POPUP --> 
+ 
+    <div class="message-overlay" id="messageOverlay"> 
+ 
+        <div class="message-box"> 
+ 
+            <button class="close-popup" onclick="closeMessage()"> 
+                × 
+            </button> 
+ 
+            <div class="message-icon" id="messageIcon">✓</div> 
+ 
+            <h2 id="messageTitle">Added to Cart</h2> 
+ 
+            <p id="messageText"> 
+                Catdation has been added to your cart. 
+            </p> 
+ 
+            <button class="message-button" id="messageButton" onclick="closeMessage()"> 
+                GO TO CART 
+            </button> 
+ 
+        </div> 
+ 
+    </div> 
+ 
     <script> 
  
         let quantity = 1; 
         let cartQuantity = 0; 
  
         function changeQuantity(amount) { 
+ 
             quantity += amount; 
  
             if (quantity < 1) { 
@@ -379,6 +501,7 @@
         } 
  
         function addToCart() { 
+ 
             cartQuantity += quantity; 
  
             document.getElementById("cartCount").textContent = cartQuantity; 
@@ -389,10 +512,20 @@
             document.getElementById("cartTotal").textContent = 
                 total.toFixed(2); 
  
-            alert("Catdation added to your cart!"); 
+            showMessage( 
+                "✓", 
+                "Added to Cart", 
+                "Catdation has been added to your cart.", 
+                "GO TO CART", 
+                function() { 
+                    closeMessage(); 
+                    document.getElementById("cartPopup").style.display = "block"; 
+                } 
+            ); 
         } 
  
         function toggleCart() { 
+ 
             const cart = document.getElementById("cartPopup"); 
  
             if (cart.style.display === "block") { 
@@ -405,12 +538,35 @@
         function checkout() { 
  
             if (cartQuantity === 0) { 
-                alert("Your cart is empty!"); 
+ 
+                showMessage( 
+                    "🛒", 
+                    "Cart Empty", 
+                    "Add Catdation to your cart before checking out.", 
+                    "CLOSE", 
+                    closeMessage 
+                ); 
+ 
                 return; 
             } 
  
-            // SEND CUSTOMER TO STRIPE CHECKOUT
-            window.location.href = "https://buy.stripe.com/dRmeVc9rObUv3Gf71xdwc00";
+            // STRIPE PAYMENT LINK
+            window.location.href = "https://buy.stripe.com/dRmeVc9rObUv3Gf71xdwc00"; 
+        } 
+ 
+        function showMessage(icon, title, text, buttonText, buttonAction) { 
+ 
+            document.getElementById("messageIcon").textContent = icon; 
+            document.getElementById("messageTitle").textContent = title; 
+            document.getElementById("messageText").textContent = text; 
+            document.getElementById("messageButton").textContent = buttonText; 
+            document.getElementById("messageButton").onclick = buttonAction; 
+ 
+            document.getElementById("messageOverlay").style.display = "flex"; 
+        } 
+ 
+        function closeMessage() { 
+            document.getElementById("messageOverlay").style.display = "none"; 
         } 
  
     </script> 

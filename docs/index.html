@@ -78,7 +78,7 @@
         .product-section {
             display: flex;
             justify-content: center;
-            padding: 30px 20px 100px;
+            padding: 30px 20px 70px;
         }
 
         .product-card {
@@ -182,36 +182,37 @@
             box-shadow: 0 0 25px #9d5cff;
         }
 
-        .features {
+        /* Discord / Ticket box */
+        .ticket-section {
             max-width: 900px;
-            margin: auto;
+            margin: 0 auto;
             padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
         }
 
-        .feature {
+        .ticket-box {
             text-align: center;
-            padding: 25px;
+            padding: 30px;
             background: #11111a;
             border: 1px solid #292938;
             border-radius: 12px;
+            box-shadow: 0 0 30px rgba(157, 92, 255, 0.08);
         }
 
-        .feature h3 {
-            margin-bottom: 8px;
+        .ticket-box h3 {
+            margin-bottom: 10px;
             color: #b47aff;
+            font-size: 22px;
         }
 
-        .feature p {
-            color: #888;
+        .ticket-box p {
+            color: #999;
+            font-size: 16px;
         }
 
         footer {
             text-align: center;
             padding: 50px 20px;
-            margin-top: 60px;
+            margin-top: 40px;
             border-top: 1px solid #22222d;
             color: #666;
         }
@@ -398,12 +399,9 @@
         }
 
         @media (max-width: 700px) {
+
             .hero h1 {
                 font-size: 42px;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
             }
 
             .product-card {
@@ -417,6 +415,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
+
             .message-box {
                 animation: none;
             }
@@ -427,113 +426,235 @@
 <body>
 
     <nav>
-        <div class="logo">CATDATION SCRIPTS</div>
+
+        <div class="logo">
+            CATDATION SCRIPTS
+        </div>
 
         <button class="cart-button" onclick="openCart()">
             🛒 Cart (<span id="cartCount">0</span>)
         </button>
+
     </nav>
 
+
     <section class="hero">
-        <h1>CATDATION SCRIPTS</h1>
-        <p>Premium scripts. Simple. Fast. Powerful.</p>
+
+        <h1>
+            CATDATION SCRIPTS
+        </h1>
+
+        <p>
+            Premium scripts. Simple. Fast. Powerful.
+        </p>
+
     </section>
+
 
     <section class="product-section">
 
         <div class="product-card">
 
             <div class="product-image">
-                <img src="IMG_1986.jpg" alt="Catdation product image">
+
+                <img
+                    src="IMG_1986.jpg"
+                    alt="Catdation product image"
+                >
+
             </div>
+
 
             <div class="product-info">
 
-                <h2>Catdation</h2>
+                <h2>
+                    Catdation
+                </h2>
 
                 <p class="description">
+
                     Get access to the Catdation script.
                     Built for gamers looking for a clean,
                     powerful script experience.
+
                 </p>
 
-                <div class="price">$8.00 Monthly</div>
 
-                <div class="quantity">
-                    <button onclick="changeQuantity(-1)" aria-label="Decrease quantity">−</button>
-                    <span id="quantity">1</span>
-                    <button onclick="changeQuantity(1)" aria-label="Increase quantity">+</button>
+                <div class="price">
+                    $15.00
                 </div>
 
-                <button class="buy-button" onclick="addToCart()">
+
+                <div class="quantity">
+
+                    <button
+                        onclick="changeQuantity(-1)"
+                        aria-label="Decrease quantity"
+                    >
+                        −
+                    </button>
+
+                    <span id="quantity">
+                        1
+                    </span>
+
+                    <button
+                        onclick="changeQuantity(1)"
+                        aria-label="Increase quantity"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+
+                <button
+                    class="buy-button"
+                    onclick="addToCart()"
+                >
                     ADD TO CART
                 </button>
 
             </div>
+
         </div>
 
     </section>
 
-    <section class="features">
 
-        <div class="feature">
-            <h3>⚡ Fast</h3>
-            <p>Quick access after purchase.</p>
-        </div>
+    <!-- TICKET INFORMATION -->
 
-        <div class="feature">
-            <h3>🔒 Secure</h3>
-            <p>Designed with security in mind.</p>
-        </div>
+    <section class="ticket-section">
 
-        <div class="feature">
-            <h3>🎮 Gaming</h3>
-            <p>Made for the gaming community.</p>
+        <div class="ticket-box">
+
+            <h3>
+                🎫 After Purchase
+            </h3>
+
+            <p>
+                Make a Ticket in the Server after you purchase.
+            </p>
+
         </div>
 
     </section>
+
 
     <footer>
+
         © 2026 Catdation Scripts. All rights reserved.
+
     </footer>
 
-    <div class="message-overlay" id="checkoutOverlay">
+
+    <!-- CHECKOUT POPUP -->
+
+    <div
+        class="message-overlay"
+        id="checkoutOverlay"
+    >
 
         <div class="message-box checkout-box">
 
-            <button class="close-popup" onclick="closeCheckout()" aria-label="Close">
+            <button
+                class="close-popup"
+                onclick="closeCheckout()"
+                aria-label="Close"
+            >
                 ×
             </button>
 
-            <div class="message-icon" id="checkoutIcon">✓</div>
 
-            <h2 id="checkoutTitle">Added to Cart</h2>
-
-            <div class="summary">
-                <span class="summary-name">Catdation</span>
-
-                <div class="quantity">
-                    <button onclick="changeCartQuantity(-1)" aria-label="Remove one script">−</button>
-                    <span id="cartQuantity">0</span>
-                    <button onclick="changeCartQuantity(1)" aria-label="Add one script">+</button>
-                </div>
-
-                <span class="summary-total">$<span id="cartTotal">0.00</span></span>
+            <div
+                class="message-icon"
+                id="checkoutIcon"
+            >
+                ✓
             </div>
 
-            <p class="field-hint" id="usernameHint">
+
+            <h2 id="checkoutTitle">
+                Added to Cart
+            </h2>
+
+
+            <div class="summary">
+
+                <span class="summary-name">
+                    Catdation
+                </span>
+
+
+                <div class="quantity">
+
+                    <button
+                        onclick="changeCartQuantity(-1)"
+                        aria-label="Remove one script"
+                    >
+                        −
+                    </button>
+
+                    <span id="cartQuantity">
+                        0
+                    </span>
+
+                    <button
+                        onclick="changeCartQuantity(1)"
+                        aria-label="Add one script"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+
+                <span class="summary-total">
+
+                    $
+                    <span id="cartTotal">
+                        0.00
+                    </span>
+
+                </span>
+
+            </div>
+
+
+            <p
+                class="field-hint"
+                id="usernameHint"
+            >
                 Enter the username for your script.
             </p>
 
-            <div class="username-fields" id="usernameFields"></div>
 
-            <p class="field-error" id="usernameError" role="alert"></p>
+            <div
+                class="username-fields"
+                id="usernameFields"
+            ></div>
 
-            <button class="message-button" onclick="goToStripe()">
+
+            <p
+                class="field-error"
+                id="usernameError"
+                role="alert"
+            ></p>
+
+
+            <button
+                class="message-button"
+                onclick="goToStripe()"
+            >
                 GO TO CHECKOUT
             </button>
 
-            <p class="limit-note" id="limitNote" hidden>
+
+            <p
+                class="limit-note"
+                id="limitNote"
+                hidden
+            >
                 Up to 9 scripts per order.
             </p>
 
@@ -541,23 +662,48 @@
 
     </div>
 
-    <div class="message-overlay" id="messageOverlay">
+
+    <!-- EMPTY CART POPUP -->
+
+    <div
+        class="message-overlay"
+        id="messageOverlay"
+    >
 
         <div class="message-box">
 
-            <button class="close-popup" onclick="closeMessage()" aria-label="Close">
+            <button
+                class="close-popup"
+                onclick="closeMessage()"
+                aria-label="Close"
+            >
                 ×
             </button>
 
-            <div class="message-icon" id="messageIcon">🛒</div>
 
-            <h2 id="messageTitle">Cart Empty</h2>
+            <div
+                class="message-icon"
+                id="messageIcon"
+            >
+                🛒
+            </div>
+
+
+            <h2 id="messageTitle">
+                Cart Empty
+            </h2>
+
 
             <p id="messageText">
                 Add Catdation to your cart before checking out.
             </p>
 
-            <button class="message-button" id="messageButton" onclick="closeMessage()">
+
+            <button
+                class="message-button"
+                id="messageButton"
+                onclick="closeMessage()"
+            >
                 CLOSE
             </button>
 
@@ -565,120 +711,239 @@
 
     </div>
 
+
     <script>
 
-        const STRIPE_LINK = "https://buy.stripe.com/dRmeVc9rObUv3Gf71xdwc00";
-        const PRICE = 8;
+        const STRIPE_LINK =
+            "https://buy.stripe.com/aFa7sKgUgf6H1y7bhNdwc02";
+
+        const PRICE = 15;
+
         const MAX_SCRIPTS = 9;
-        const USERNAME_PATTERN = /^[A-Za-z0-9_]{1,20}$/;
+
+        const USERNAME_PATTERN =
+            /^[A-Za-z0-9_]{1,20}$/;
+
 
         let quantity = 1;
+
         let cartQuantity = 0;
+
         let usernames = [];
+
 
         function changeQuantity(amount) {
 
-            quantity = Math.min(MAX_SCRIPTS, Math.max(1, quantity + amount));
+            quantity =
+                Math.min(
+                    MAX_SCRIPTS,
+                    Math.max(
+                        1,
+                        quantity + amount
+                    )
+                );
 
-            document.getElementById("quantity").textContent = quantity;
+            document.getElementById(
+                "quantity"
+            ).textContent = quantity;
+
         }
+
 
         function addToCart() {
 
-            cartQuantity = Math.min(MAX_SCRIPTS, cartQuantity + quantity);
+            cartQuantity =
+                Math.min(
+                    MAX_SCRIPTS,
+                    cartQuantity + quantity
+                );
 
             renderCart();
-            openCheckout("✓", "Added to Cart");
+
+            openCheckout(
+                "✓",
+                "Added to Cart"
+            );
+
         }
+
 
         function changeCartQuantity(amount) {
 
-            cartQuantity = Math.min(MAX_SCRIPTS, Math.max(0, cartQuantity + amount));
+            cartQuantity =
+                Math.min(
+                    MAX_SCRIPTS,
+                    Math.max(
+                        0,
+                        cartQuantity + amount
+                    )
+                );
 
             renderCart();
 
             if (cartQuantity === 0) {
+
                 closeCheckout();
+
             }
+
         }
+
 
         function renderCart() {
 
-            document.getElementById("cartCount").textContent = cartQuantity;
-            document.getElementById("cartQuantity").textContent = cartQuantity;
+            document.getElementById(
+                "cartCount"
+            ).textContent = cartQuantity;
 
-            document.getElementById("cartTotal").textContent =
-                (cartQuantity * PRICE).toFixed(2);
 
-            document.getElementById("usernameHint").textContent =
+            document.getElementById(
+                "cartQuantity"
+            ).textContent = cartQuantity;
+
+
+            document.getElementById(
+                "cartTotal"
+            ).textContent =
+                (
+                    cartQuantity * PRICE
+                ).toFixed(2);
+
+
+            document.getElementById(
+                "usernameHint"
+            ).textContent =
                 cartQuantity > 1
                     ? "Enter one username for each script."
                     : "Enter the username for your script.";
 
-            document.getElementById("limitNote").hidden =
+
+            document.getElementById(
+                "limitNote"
+            ).hidden =
                 cartQuantity < MAX_SCRIPTS;
 
-            document.getElementById("usernameError").textContent = "";
+
+            document.getElementById(
+                "usernameError"
+            ).textContent = "";
+
 
             renderUsernameFields();
+
         }
+
 
         function renderUsernameFields() {
 
             const container =
-                document.getElementById("usernameFields");
+                document.getElementById(
+                    "usernameFields"
+                );
 
-            usernames = Array.from(
-                { length: cartQuantity },
-                function(_, index) {
-                    return usernames[index] || "";
-                }
-            );
+
+            usernames =
+                Array.from(
+                    {
+                        length: cartQuantity
+                    },
+                    function(_, index) {
+
+                        return usernames[index] || "";
+
+                    }
+                );
+
 
             container.innerHTML = "";
 
-            usernames.forEach(function(value, index) {
 
-                const label =
-                    cartQuantity > 1
-                        ? "Username " + (index + 1)
-                        : "Username";
+            usernames.forEach(
+                function(value, index) {
 
-                const input =
-                    document.createElement("input");
+                    const label =
+                        cartQuantity > 1
+                            ? "Username " + (index + 1)
+                            : "Username";
 
-                input.type = "text";
-                input.className = "username-input";
-                input.placeholder = label;
-                input.maxLength = 20;
-                input.value = value;
-                input.autocomplete = "off";
-                input.spellcheck = false;
-                input.setAttribute("autocapitalize", "off");
-                input.setAttribute("aria-label", label);
 
-                input.addEventListener("input", function() {
+                    const input =
+                        document.createElement(
+                            "input"
+                        );
 
-                    usernames[index] =
-                        input.value.trim();
 
-                    input.classList.remove("invalid");
+                    input.type = "text";
 
-                    document.getElementById(
-                        "usernameError"
-                    ).textContent = "";
-                });
+                    input.className =
+                        "username-input";
 
-                input.addEventListener("keydown", function(event) {
+                    input.placeholder =
+                        label;
 
-                    if (event.key === "Enter") {
-                        goToStripe();
-                    }
-                });
+                    input.maxLength = 20;
 
-                container.appendChild(input);
-            });
+                    input.value = value;
+
+                    input.autocomplete = "off";
+
+                    input.spellcheck = false;
+
+                    input.setAttribute(
+                        "autocapitalize",
+                        "off"
+                    );
+
+                    input.setAttribute(
+                        "aria-label",
+                        label
+                    );
+
+
+                    input.addEventListener(
+                        "input",
+                        function() {
+
+                            usernames[index] =
+                                input.value.trim();
+
+                            input.classList.remove(
+                                "invalid"
+                            );
+
+                            document.getElementById(
+                                "usernameError"
+                            ).textContent = "";
+
+                        }
+                    );
+
+
+                    input.addEventListener(
+                        "keydown",
+                        function(event) {
+
+                            if (
+                                event.key === "Enter"
+                            ) {
+
+                                goToStripe();
+
+                            }
+
+                        }
+                    );
+
+
+                    container.appendChild(
+                        input
+                    );
+
+                }
+            );
+
         }
+
 
         function openCart() {
 
@@ -693,77 +958,139 @@
                 );
 
                 return;
+
             }
 
-            openCheckout("🛒", "Checkout");
+
+            openCheckout(
+                "🛒",
+                "Checkout"
+            );
+
         }
 
-        function openCheckout(icon, title) {
 
-            document.getElementById("checkoutIcon").textContent = icon;
-            document.getElementById("checkoutTitle").textContent = title;
+        function openCheckout(
+            icon,
+            title
+        ) {
+
+            document.getElementById(
+                "checkoutIcon"
+            ).textContent = icon;
+
+
+            document.getElementById(
+                "checkoutTitle"
+            ).textContent = title;
+
 
             document.getElementById(
                 "checkoutOverlay"
             ).style.display = "flex";
 
+
             const inputs =
                 Array.from(
-                    document.querySelectorAll(".username-input")
+                    document.querySelectorAll(
+                        ".username-input"
+                    )
                 );
 
+
             const firstEmpty =
-                inputs.find(function(input) {
-                    return input.value.trim() === "";
-                });
+                inputs.find(
+                    function(input) {
+
+                        return (
+                            input.value.trim() === ""
+                        );
+
+                    }
+                );
+
 
             if (firstEmpty) {
+
                 firstEmpty.focus();
+
             }
+
         }
+
 
         function closeCheckout() {
 
             document.getElementById(
                 "checkoutOverlay"
             ).style.display = "none";
+
         }
+
 
         function goToStripe() {
 
             const inputs =
                 Array.from(
-                    document.querySelectorAll(".username-input")
+                    document.querySelectorAll(
+                        ".username-input"
+                    )
                 );
+
 
             const error =
-                document.getElementById("usernameError");
-
-            let firstInvalid = null;
-            let anyEmpty = false;
-
-            inputs.forEach(function(input, index) {
-
-                const value = input.value.trim();
-
-                const valid =
-                    USERNAME_PATTERN.test(value);
-
-                usernames[index] = value;
-
-                input.classList.toggle(
-                    "invalid",
-                    !valid
+                document.getElementById(
+                    "usernameError"
                 );
 
-                if (value === "") {
-                    anyEmpty = true;
-                }
 
-                if (!valid && !firstInvalid) {
-                    firstInvalid = input;
+            let firstInvalid = null;
+
+            let anyEmpty = false;
+
+
+            inputs.forEach(
+                function(input, index) {
+
+                    const value =
+                        input.value.trim();
+
+
+                    const valid =
+                        USERNAME_PATTERN.test(
+                            value
+                        );
+
+
+                    usernames[index] =
+                        value;
+
+
+                    input.classList.toggle(
+                        "invalid",
+                        !valid
+                    );
+
+
+                    if (value === "") {
+
+                        anyEmpty = true;
+
+                    }
+
+
+                    if (
+                        !valid &&
+                        !firstInvalid
+                    ) {
+
+                        firstInvalid = input;
+
+                    }
+
                 }
-            });
+            );
+
 
             if (firstInvalid) {
 
@@ -772,10 +1099,13 @@
                         ? "Enter a username for each script."
                         : "Usernames can only use letters, numbers and underscores.";
 
+
                 firstInvalid.focus();
 
                 return;
+
             }
+
 
             window.location.href =
                 STRIPE_LINK
@@ -783,7 +1113,9 @@
                 + encodeURIComponent(
                     usernames.join("-")
                 );
+
         }
+
 
         function showMessage(
             icon,
@@ -797,60 +1129,94 @@
                 "messageIcon"
             ).textContent = icon;
 
+
             document.getElementById(
                 "messageTitle"
             ).textContent = title;
+
 
             document.getElementById(
                 "messageText"
             ).textContent = text;
 
+
             document.getElementById(
                 "messageButton"
             ).textContent = buttonText;
 
+
             document.getElementById(
                 "messageButton"
-            ).onclick = buttonAction;
+            ).onclick =
+                buttonAction;
+
 
             document.getElementById(
                 "messageOverlay"
             ).style.display = "flex";
+
         }
+
 
         function closeMessage() {
 
             document.getElementById(
                 "messageOverlay"
             ).style.display = "none";
+
         }
+
 
         document.getElementById(
             "checkoutOverlay"
-        ).addEventListener("click", function(event) {
+        ).addEventListener(
+            "click",
+            function(event) {
 
-            if (event.target === this) {
-                closeCheckout();
+                if (
+                    event.target === this
+                ) {
+
+                    closeCheckout();
+
+                }
+
             }
-        });
+        );
+
 
         document.getElementById(
             "messageOverlay"
-        ).addEventListener("click", function(event) {
+        ).addEventListener(
+            "click",
+            function(event) {
 
-            if (event.target === this) {
-                closeMessage();
+                if (
+                    event.target === this
+                ) {
+
+                    closeMessage();
+
+                }
+
             }
-        });
+        );
+
 
         document.addEventListener(
             "keydown",
             function(event) {
 
-                if (event.key === "Escape") {
+                if (
+                    event.key === "Escape"
+                ) {
+
                     closeCheckout();
+
                     closeMessage();
+
                 }
+
             }
         );
 

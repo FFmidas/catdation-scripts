@@ -182,7 +182,6 @@
             box-shadow: 0 0 25px #9d5cff;
         }
 
-        /* Discord / Ticket box */
         .ticket-section {
             max-width: 900px;
             margin: 0 auto;
@@ -229,10 +228,8 @@
         }
 
         .message-box {
-            width: 350px;
+            width: 390px;
             max-width: 90%;
-            max-height: 92vh;
-            overflow-y: auto;
             background: #11111a;
             border: 1px solid #9d5cff;
             border-radius: 16px;
@@ -241,10 +238,6 @@
             box-shadow: 0 0 50px rgba(157, 92, 255, 0.35);
             animation: popupIn 0.25s ease;
             position: relative;
-        }
-
-        .checkout-box {
-            width: 390px;
         }
 
         .message-icon {
@@ -297,78 +290,22 @@
             font-size: 16px;
         }
 
-        .message-box .field-hint {
-            text-align: left;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .username-fields {
-            max-height: 36vh;
-            overflow-y: auto;
-        }
-
-        .username-input {
-            width: 100%;
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            background: #08080d;
-            border: 1px solid #292938;
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .username-input::placeholder {
-            color: #666;
-        }
-
-        .username-input:focus {
-            border-color: #9d5cff;
-        }
-
-        .username-input.invalid {
-            border-color: #ff5c7a;
-        }
-
-        .message-box .field-error {
-            text-align: left;
-            font-size: 14px;
-            color: #ff8098;
-            margin-bottom: 12px;
-        }
-
-        .message-box .field-error:empty {
-            display: none;
-        }
-
-        .message-box .limit-note {
-            font-size: 13px;
-            margin: 12px 0 0;
-        }
-
         .message-button {
             width: 100%;
-            padding: 13px;
+            padding: 15px;
             border: none;
             border-radius: 8px;
-            background: #9d5cff;
+            background: linear-gradient(90deg, #7d3cff, #b45cff);
             color: white;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .message-button:hover {
             background: #b47aff;
             box-shadow: 0 0 20px #9d5cff;
-        }
-
-        .checkout-box .message-button {
-            margin-top: 6px;
-            padding: 15px;
-            font-size: 16px;
-            background: linear-gradient(90deg, #7d3cff, #b45cff);
         }
 
         .close-popup {
@@ -522,8 +459,6 @@
     </section>
 
 
-    <!-- TICKET INFORMATION -->
-
     <section class="ticket-section">
 
         <div class="ticket-box">
@@ -555,7 +490,7 @@
         id="checkoutOverlay"
     >
 
-        <div class="message-box checkout-box">
+        <div class="message-box">
 
             <button
                 class="close-popup"
@@ -566,16 +501,13 @@
             </button>
 
 
-            <div
-                class="message-icon"
-                id="checkoutIcon"
-            >
-                ✓
+            <div class="message-icon">
+                🛒
             </div>
 
 
-            <h2 id="checkoutTitle">
-                Added to Cart
+            <h2>
+                Checkout
             </h2>
 
 
@@ -621,42 +553,12 @@
             </div>
 
 
-            <p
-                class="field-hint"
-                id="usernameHint"
-            >
-                Enter the username for your script.
-            </p>
-
-
-            <div
-                class="username-fields"
-                id="usernameFields"
-            ></div>
-
-
-            <p
-                class="field-error"
-                id="usernameError"
-                role="alert"
-            ></p>
-
-
             <button
                 class="message-button"
                 onclick="goToStripe()"
             >
                 GO TO CHECKOUT
             </button>
-
-
-            <p
-                class="limit-note"
-                id="limitNote"
-                hidden
-            >
-                Up to 9 scripts per order.
-            </p>
 
         </div>
 
@@ -681,27 +583,23 @@
             </button>
 
 
-            <div
-                class="message-icon"
-                id="messageIcon"
-            >
+            <div class="message-icon">
                 🛒
             </div>
 
 
-            <h2 id="messageTitle">
+            <h2>
                 Cart Empty
             </h2>
 
 
-            <p id="messageText">
+            <p>
                 Add Catdation to your cart before checking out.
             </p>
 
 
             <button
                 class="message-button"
-                id="messageButton"
                 onclick="closeMessage()"
             >
                 CLOSE
@@ -721,15 +619,9 @@
 
         const MAX_SCRIPTS = 9;
 
-        const USERNAME_PATTERN =
-            /^[A-Za-z0-9_]{1,20}$/;
-
-
         let quantity = 1;
 
         let cartQuantity = 0;
-
-        let usernames = [];
 
 
         function changeQuantity(amount) {
@@ -760,10 +652,7 @@
 
             renderCart();
 
-            openCheckout(
-                "✓",
-                "Added to Cart"
-            );
+            openCheckout();
 
         }
 
@@ -809,139 +698,6 @@
                     cartQuantity * PRICE
                 ).toFixed(2);
 
-
-            document.getElementById(
-                "usernameHint"
-            ).textContent =
-                cartQuantity > 1
-                    ? "Enter one username for each script."
-                    : "Enter the username for your script.";
-
-
-            document.getElementById(
-                "limitNote"
-            ).hidden =
-                cartQuantity < MAX_SCRIPTS;
-
-
-            document.getElementById(
-                "usernameError"
-            ).textContent = "";
-
-
-            renderUsernameFields();
-
-        }
-
-
-        function renderUsernameFields() {
-
-            const container =
-                document.getElementById(
-                    "usernameFields"
-                );
-
-
-            usernames =
-                Array.from(
-                    {
-                        length: cartQuantity
-                    },
-                    function(_, index) {
-
-                        return usernames[index] || "";
-
-                    }
-                );
-
-
-            container.innerHTML = "";
-
-
-            usernames.forEach(
-                function(value, index) {
-
-                    const label =
-                        cartQuantity > 1
-                            ? "Username " + (index + 1)
-                            : "Username";
-
-
-                    const input =
-                        document.createElement(
-                            "input"
-                        );
-
-
-                    input.type = "text";
-
-                    input.className =
-                        "username-input";
-
-                    input.placeholder =
-                        label;
-
-                    input.maxLength = 20;
-
-                    input.value = value;
-
-                    input.autocomplete = "off";
-
-                    input.spellcheck = false;
-
-                    input.setAttribute(
-                        "autocapitalize",
-                        "off"
-                    );
-
-                    input.setAttribute(
-                        "aria-label",
-                        label
-                    );
-
-
-                    input.addEventListener(
-                        "input",
-                        function() {
-
-                            usernames[index] =
-                                input.value.trim();
-
-                            input.classList.remove(
-                                "invalid"
-                            );
-
-                            document.getElementById(
-                                "usernameError"
-                            ).textContent = "";
-
-                        }
-                    );
-
-
-                    input.addEventListener(
-                        "keydown",
-                        function(event) {
-
-                            if (
-                                event.key === "Enter"
-                            ) {
-
-                                goToStripe();
-
-                            }
-
-                        }
-                    );
-
-
-                    container.appendChild(
-                        input
-                    );
-
-                }
-            );
-
         }
 
 
@@ -949,72 +705,25 @@
 
             if (cartQuantity === 0) {
 
-                showMessage(
-                    "🛒",
-                    "Cart Empty",
-                    "Add Catdation to your cart before checking out.",
-                    "CLOSE",
-                    closeMessage
-                );
+                document.getElementById(
+                    "messageOverlay"
+                ).style.display = "flex";
 
                 return;
 
             }
 
 
-            openCheckout(
-                "🛒",
-                "Checkout"
-            );
+            openCheckout();
 
         }
 
 
-        function openCheckout(
-            icon,
-            title
-        ) {
-
-            document.getElementById(
-                "checkoutIcon"
-            ).textContent = icon;
-
-
-            document.getElementById(
-                "checkoutTitle"
-            ).textContent = title;
-
+        function openCheckout() {
 
             document.getElementById(
                 "checkoutOverlay"
             ).style.display = "flex";
-
-
-            const inputs =
-                Array.from(
-                    document.querySelectorAll(
-                        ".username-input"
-                    )
-                );
-
-
-            const firstEmpty =
-                inputs.find(
-                    function(input) {
-
-                        return (
-                            input.value.trim() === ""
-                        );
-
-                    }
-                );
-
-
-            if (firstEmpty) {
-
-                firstEmpty.focus();
-
-            }
 
         }
 
@@ -1030,130 +739,19 @@
 
         function goToStripe() {
 
-            const inputs =
-                Array.from(
-                    document.querySelectorAll(
-                        ".username-input"
-                    )
-                );
-
-
-            const error =
-                document.getElementById(
-                    "usernameError"
-                );
-
-
-            let firstInvalid = null;
-
-            let anyEmpty = false;
-
-
-            inputs.forEach(
-                function(input, index) {
-
-                    const value =
-                        input.value.trim();
-
-
-                    const valid =
-                        USERNAME_PATTERN.test(
-                            value
-                        );
-
-
-                    usernames[index] =
-                        value;
-
-
-                    input.classList.toggle(
-                        "invalid",
-                        !valid
-                    );
-
-
-                    if (value === "") {
-
-                        anyEmpty = true;
-
-                    }
-
-
-                    if (
-                        !valid &&
-                        !firstInvalid
-                    ) {
-
-                        firstInvalid = input;
-
-                    }
-
-                }
-            );
-
-
-            if (firstInvalid) {
-
-                error.textContent =
-                    anyEmpty
-                        ? "Enter a username for each script."
-                        : "Usernames can only use letters, numbers and underscores.";
-
-
-                firstInvalid.focus();
-
+            if (cartQuantity <= 0) {
                 return;
-
             }
 
+            /*
+             * Stripe Payment Links can handle the quantity
+             * using the ?quantity= parameter.
+             */
 
             window.location.href =
                 STRIPE_LINK
-                + "?client_reference_id="
-                + encodeURIComponent(
-                    usernames.join("-")
-                );
-
-        }
-
-
-        function showMessage(
-            icon,
-            title,
-            text,
-            buttonText,
-            buttonAction
-        ) {
-
-            document.getElementById(
-                "messageIcon"
-            ).textContent = icon;
-
-
-            document.getElementById(
-                "messageTitle"
-            ).textContent = title;
-
-
-            document.getElementById(
-                "messageText"
-            ).textContent = text;
-
-
-            document.getElementById(
-                "messageButton"
-            ).textContent = buttonText;
-
-
-            document.getElementById(
-                "messageButton"
-            ).onclick =
-                buttonAction;
-
-
-            document.getElementById(
-                "messageOverlay"
-            ).style.display = "flex";
+                + "?quantity="
+                + cartQuantity;
 
         }
 
